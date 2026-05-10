@@ -156,6 +156,8 @@ namespace AgeOfConfession
             sapi.WorldManager.SaveGame.StoreData(SaveDataKey,SerializerUtil.Serialize(saveData));
         }
 
+
+
         private TextCommandResult OnCreateBelief(TextCommandCallingArgs args)
         {
             IServerPlayer player = args.Caller.Player as IServerPlayer;
@@ -214,7 +216,7 @@ namespace AgeOfConfession
                 sb.Append(belief.CommunityIds.Count == 1 ? " community" : " communities");
                 sb.Append(")");
 
-                if (!showAdminInfo || belief.CommunityIds.Count == 0)
+                if (belief.CommunityIds.Count == 0)
                 {
                     var countdown = sapi.World.Calendar.TotalDays - belief.BecameEmptyTotalDays;
 
@@ -225,9 +227,8 @@ namespace AgeOfConfession
                 sb.Append(", ");
 
 
-
-
-                List<string> communityInfos = new();
+                if (showAdminInfo && belief.CommunityIds.Count < 0) { 
+                    List<string> communityInfos = new();
 
                 foreach (string communityId in belief.CommunityIds)
                 {
@@ -244,6 +245,7 @@ namespace AgeOfConfession
                 }
 
                 sb.Append(string.Join(", ", communityInfos));
+            }
 
             }
 
