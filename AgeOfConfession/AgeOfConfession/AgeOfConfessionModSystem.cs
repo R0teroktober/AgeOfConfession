@@ -42,7 +42,7 @@ namespace AgeOfConfession
                     StartCharge = 540,
                     MaxCharge = 1980,
                     CommunityExclusionRadius = 100,
-                    InfluenceRadius = 10,
+                    InfluenceRadius = 15,
                     BaseChargeGain = 3,
                     DecayRate = 3,
                     EmptyBeliefDeletionDays = 365,
@@ -52,7 +52,7 @@ namespace AgeOfConfession
                     HealingGainByTier = new float[] { 0.1f, 0.2f, 0.4f, 0.6f },
                     AreaDamageByTier = new float[] { 1f, 2f, 4f, 5f },
                     AreaDamageTargetCodeContains = new string[] { "drifter", "bowtorn", "shiver" },
-                    BeliefFounderAllowedClasses = new string[] { "malefactor" }
+                    BeliefFounderAllowedClasses = new string[] { "commoner" }
 
                 };
 
