@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
+using HarmonyLib;
 using System.Collections.Generic;
 using System.Linq;
 using Vintagestory.API.Common;
@@ -6,6 +8,7 @@ using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Config;
 using Vintagestory.API.MathTools;
 using Vintagestory.API.Server;
+using Vintagestory.API.Datastructures;
 
 
 
@@ -25,6 +28,21 @@ namespace AgeOfConfession {
         private long devotionPulseIndex;
 
         private const string DevotionHungerStatCode = "ageofconfession-devotion";
+
+        private const string DevotionAnimationCode = "devoting";
+
+        private static AnimationMetaData CreateDevotionAnimMeta()
+        {
+            return new AnimationMetaData
+            {
+                Code = DevotionAnimationCode,
+                Animation = DevotionAnimationCode,
+                AnimationSpeed = 1f,
+                BlendMode = EnumAnimationBlendMode.Add,
+                Weight = 1f,
+                Attributes = new JsonObject(JToken.Parse("{\"authorative\": true}"))
+            };
+        }
 
 
         public override bool ShouldLoad(EnumAppSide forSide)
@@ -51,6 +69,7 @@ namespace AgeOfConfession {
             if (fromPlayer?.Entity == null) return;
            
             StartDevotion(fromPlayer);
+            fromPlayer.Entity.AnimManager.StartAnimation(CreateDevotionAnimMeta());
         }
 
         private void OnStopDevotionPacket(IServerPlayer fromPlayer, StopDevotionPacket packet)
@@ -58,6 +77,7 @@ namespace AgeOfConfession {
             if (fromPlayer == null) return;
            
             StopDevotion(fromPlayer);
+            fromPlayer.Entity.AnimManager.StopAnimation(DevotionAnimationCode);
         }
 
 

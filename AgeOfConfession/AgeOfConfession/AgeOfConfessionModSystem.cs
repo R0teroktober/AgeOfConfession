@@ -42,7 +42,7 @@ namespace AgeOfConfession
                     StartCharge = 540,
                     MaxCharge = 1980,
                     CommunityExclusionRadius = 100,
-                    InfluenceRadius = 10,
+                    InfluenceRadius = 15,
                     BaseChargeGain = 3,
                     DecayRate = 3,
                     EmptyBeliefDeletionDays = 365,
@@ -52,7 +52,7 @@ namespace AgeOfConfession
                     HealingGainByTier = new float[] { 0.1f, 0.2f, 0.4f, 0.6f },
                     AreaDamageByTier = new float[] { 1f, 2f, 4f, 5f },
                     AreaDamageTargetCodeContains = new string[] { "drifter", "bowtorn", "shiver" },
-                    BeliefFounderAllowedClasses = new string[] { "malefactor" }
+                    BeliefFounderAllowedClasses = new string[] { "commoner" }
 
                 };
 
@@ -156,6 +156,8 @@ namespace AgeOfConfession
             sapi.WorldManager.SaveGame.StoreData(SaveDataKey,SerializerUtil.Serialize(saveData));
         }
 
+
+
         private TextCommandResult OnCreateBelief(TextCommandCallingArgs args)
         {
             IServerPlayer player = args.Caller.Player as IServerPlayer;
@@ -214,7 +216,7 @@ namespace AgeOfConfession
                 sb.Append(belief.CommunityIds.Count == 1 ? " community" : " communities");
                 sb.Append(")");
 
-                if (!showAdminInfo || belief.CommunityIds.Count == 0)
+                if (belief.CommunityIds.Count == 0)
                 {
                     var countdown = sapi.World.Calendar.TotalDays - belief.BecameEmptyTotalDays;
 
@@ -225,9 +227,8 @@ namespace AgeOfConfession
                 sb.Append(", ");
 
 
-
-
-                List<string> communityInfos = new();
+                if (showAdminInfo && belief.CommunityIds.Count < 0) { 
+                    List<string> communityInfos = new();
 
                 foreach (string communityId in belief.CommunityIds)
                 {
@@ -244,6 +245,7 @@ namespace AgeOfConfession
                 }
 
                 sb.Append(string.Join(", ", communityInfos));
+            }
 
             }
 

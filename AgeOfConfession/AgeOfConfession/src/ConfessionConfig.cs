@@ -27,7 +27,7 @@ namespace AgeOfConfession
 
         public float[] HealingGainByTier { get; set; } =
         {
-        0.1f, 0.2f, 0.4f, 0.6f
+        0.1f, 0.2f, 0.5f, 0.8f
         };
 
         public float[] AreaDamageByTier { get; set; } =
@@ -44,7 +44,7 @@ namespace AgeOfConfession
 
         public string[] BeliefFounderAllowedClasses { get; set; } =
         {
-           "malefactor"
+           "commoner"
         };
 
     }
