@@ -16,8 +16,6 @@ namespace AgeOfConfession
 
         public Vec3d StartPosition { get; set; } = new();
 
-        public long LastNothingMessagePulse { get; set; } = -9999;
-
 
 
     }
